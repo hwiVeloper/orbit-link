@@ -68,6 +68,7 @@ public class WebSecurityConfig {
                         .requestMatchers(PERMIT_URL_ARRAY).permitAll()
                         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/test/**")).anonymous()
                         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/meta/**")).anonymous()
+                        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/auth/instagram")).anonymous()
                         .anyRequest().authenticated())
                 .exceptionHandling(c -> c
                         .authenticationEntryPoint(entryPoint)
@@ -84,7 +85,7 @@ public class WebSecurityConfig {
         // 정적 리소스 spring security 대상에서 제외
         return (web) -> web
                 .ignoring()
-                .requestMatchers("/auth/**", "/terms/**", "/test/**", "/api/meta/**")
+                .requestMatchers("/auth/**", "/terms/**", "/test/**", "/api/meta/**", "/api/auth/instagram/**")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                 .requestMatchers(PERMIT_URL_ARRAY);
     }
