@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+  <springProperty name="appName" source="spring.application.name" />
+  <springProperty name="profile" source="spring.profiles.active" />
+
+  <conversionRule conversionWord="clr" class="org.springframework.boot.logging.logback.ColorConverter" />
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%clr(${LOG_LEVEL_PATTERN:-%5p})]%X{sessionId}[%t][%-35.35C{1}:%-4L] : %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <springProfile name="local">
+    <root level="INFO">
+      <appender-ref ref="CONSOLE" />
+    </root>
+  </springProfile>
+
+  <springProfile name="dev">
+    <root level="INFO">
+      <appender-ref ref="CONSOLE" />
+    </root>
+  </springProfile>
+
+  <springProfile name="production">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>/data/logs/${appName}/${appName}.log</file>
+
+      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p}]%X{sessionId}[%t][%-35.35C{1}:%-4L] : %msg%n</pattern>
+      </encoder>
+
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>/data/logs/${appName}/${appName}.log.%d{yyyy-MM-dd}</fileNamePattern>
+      </rollingPolicy>
+
+      <maxHistory>90</maxHistory>
+
+      <totalSizeCap>10GB</totalSizeCap>
+    </appender>
+
+    <root level="INFO">
+      <appender-ref ref="CONSOLE" />
+      <appender-ref ref="FILE" />
+    </root>
+  </springProfile>
+</configuration>

@@ -27,61 +27,61 @@ spring:
         highlight_sql: true
     hibernate:
       ddl-auto: update
-#      naming:
-#        physical-strategy: dev.hwiveloper.ggbb.common.config.UpperCaseNamingStrategy
-    mail:
-      host: smtp.gmail.com
-      port: 587
-      username: ${MAIL_USER}
-      password: ${MAIL_PASS}
-      properties:
-        mail:
-          smtp:
-            auth: true
-            starttls:
-              enable: true
-              required: true
-    devtools:
-      restart:
-        enabled: true
-    jackson:
-      mapper:
-        default-view-inclusion: true
-    servlet:
-      multipart:
-        max-file-size: 10MB
-    level:
-      org.springframework.security: DEBUG
-      org:
-        hibernate:
-          sql: DEBUG
-          orm:
-            jdbc:
-              bind: TRACE
-    logback:
-      org.hibernate.type=trace
-      org.hibernate.type.descriptor.sql=trace
-  jwt:
-    secret: ${JWT_SECRET}
-  springdoc:
-    api-docs:
-      version: openapi_3_0
+      naming:
+        physical-strategy: dev.hwiveloper.orbitlink.common.config.UpperCaseNamingStrategy
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USER}
+    password: ${MAIL_PASS}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  devtools:
+    restart:
+      enabled: true
+  jackson:
+    mapper:
+      default-view-inclusion: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  level:
+    org.springframework.security: DEBUG
+    org:
+      hibernate:
+        sql: DEBUG
+        orm:
+          jdbc:
+            bind: TRACE
+  logback:
+    org.hibernate.type=trace
+    org.hibernate.type.descriptor.sql=trace
+jwt:
+  secret: ${JWT_SECRET}
+springdoc:
+  api-docs:
+    version: openapi_3_0
 
-  # ??????? (data.go.kr)
-  public:
-    data:
-      service:
-        key: ${PUBLIC_DATA_SERVICE_KEY}
-  cloud:
-    aws:
-      credentials:
-        access-key: ${AWS_ACCESS_KEY}
-        secret-key: ${AWS_SECRET_KEY}
-      region:
-        static: ap-northeast-2
-      stack:
-        auto: false
-      s3:
-        bucket: ggbb.app
-      cloudfront:
-        domain: ${CLOUDFRONT_DOMAIN}
+meta:
+  app-id: ${META_APP_ID}
+  app-secret: ${META_APP_SECRET}
+  redirect-uri: ${META_REDIRECT_URI}
+
+#  cloud:
+#    aws:
+#      credentials:
+#        access-key: ${AWS_ACCESS_KEY}
+#        secret-key: ${AWS_SECRET_KEY}
+#      region:
+#        static: ap-northeast-2
+#      stack:
+#        auto: false
+#      s3:
+#        bucket: ggbb.app
+#      cloudfront:
+#        domain: ${CLOUDFRONT_DOMAIN}
