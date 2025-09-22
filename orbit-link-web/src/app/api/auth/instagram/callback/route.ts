@@ -12,6 +12,8 @@ export async function GET(req: NextRequest) {
     process.env.BACKEND_BASE_URL + "/api/auth/instagram/callback";
   const res = await fetch(backendUrl + `?code=${code}`, { method: "GET" });
 
+  console.log(res);
+
   if (!res.ok) {
     return NextResponse.json(
       { error: "Failed to exchange code" },
