@@ -35,7 +35,7 @@ public class CustomRequestFilter extends OncePerRequestFilter {
     private final CustomUserDetailsService customUserDetailsService;
 
     private static final List<String> EXCLUDED_URL_PREFIXES = List.of(
-            "/auth", "/policy", "/terms", "/swagger-ui", "/v3/api-docs", "/test", "/api/meta", "/api/auth/instagram"
+            "/auth", "/policy", "/terms", "/swagger-ui", "/v3/api-docs", "/test", "/api/meta", "/api/auth/instagram", "/webhook/instagram"
     );
 
     public Authentication getAuthentication(String token) {

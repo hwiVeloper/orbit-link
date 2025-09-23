@@ -1,0 +1,34 @@
+import type { Metadata } from "next";
+import "@/app/globals.css";
+
+export default function AppLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="ko">
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+      </head>
+      <body className="min-h-screen flex flex-col">
+        <header className="p-4 shadow-md flex justify-between items-center">
+          <h1 className="text-xl font-bold">Orbit Link</h1>
+          <nav>
+            <a href="/" className="mr-4">
+              홈
+            </a>
+            <a href="/dashboard">대시보드</a>
+          </nav>
+        </header>
+        <main className="flex-1">{children}</main>
+        <footer className="p-4 text-center text-gray-500 text-sm border-t">
+          © 2026 Orbit Link. All rights reserved.
+        </footer>
+      </body>
+    </html>
+  );
+}

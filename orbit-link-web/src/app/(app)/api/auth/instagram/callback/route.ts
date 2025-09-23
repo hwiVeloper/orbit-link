@@ -4,7 +4,7 @@ export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
 
   if (!code) {
-    return NextResponse.json({ error: "No code provided" }, { status: 400 });
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   // Spring Boot 서버로 전달
@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   });
 
   console.log(res);
-  const { resCode, resMsg, resData } = await res.json();
+  const { resCode, resData } = await res.json();
 
   if (resCode !== 0) {
     return NextResponse.json(

@@ -1,6 +1,6 @@
 "use client";
 
-export default function LoginPage() {
+const ConnectInstagramPage = () => {
   const clientId = process.env.NEXT_PUBLIC_FACEBOOK_APP_ID!;
   const redirectUri = process.env.NEXT_PUBLIC_FACEBOOK_REDIRECT_URI!;
   // 필요한 권한
@@ -22,4 +22,6 @@ export default function LoginPage() {
       </a>
     </div>
   );
-}
+};
+
+export default ConnectInstagramPage;
