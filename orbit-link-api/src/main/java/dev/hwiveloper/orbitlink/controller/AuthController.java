@@ -62,13 +62,40 @@ public class AuthController {
                     .uri(tokenUrl)
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                     .body(BodyInserters.fromFormData(formData))
-                    .retrieve()
-                    .bodyToMono(String.class)
+                    .exchangeToMono(response ->
+                            response.bodyToMono(String.class)
+                                    .<String>handle((body, sink) -> {
+                                        if (response.statusCode().isError()) {
+                                            sink.error(new RuntimeException("Error " + response.statusCode() + ": " + body));
+                                            return;
+                                        }
+                                        sink.next(body);
+                                    })
+                    )
                     .block();
 
             JSONObject resBodyJson = new JSONObject(tokenResponse);
-            String accessToken = resBodyJson.optString("access_token");
-            String userId = resBodyJson.optString("user_id");
+
+            log.info("Instagram Token Response: {}", resBodyJson.toString());
+
+            String accessToken = null, userId = null;
+
+            if (resBodyJson.has("data") && !resBodyJson.getJSONArray("data").isEmpty()) {
+                JSONArray dataArray = resBodyJson.getJSONArray("data");
+                JSONObject firstData = dataArray.getJSONObject(0);
+                accessToken = firstData.optString("access_token");
+                userId = firstData.optString("user_id");
+            } else if (resBodyJson.has("error")) {
+                JSONObject errorObj = resBodyJson.getJSONObject("error");
+                String errorMessage = errorObj.optString("message", "Unknown error");
+                log.error("Instagram API Error: {}", errorMessage);
+                resDTO.setRes(APIConst.EXTERNAL_API_ERROR);
+                return resDTO;
+            } else if (resBodyJson.has("access_token") && resBodyJson.has("user_id")) {
+                accessToken = resBodyJson.optString("access_token");
+                userId = resBodyJson.optString("user_id");
+            }
+
 
             log.info("Instagram Access Token: {}", accessToken);
             log.info("Instagram User ID: {}", userId);

@@ -26,5 +26,5 @@ export async function GET(req: NextRequest) {
 
   console.log("Instagram 연동 성공:", resData);
 
-  return NextResponse.redirect("/dashboard");
+  return NextResponse.redirect(new URL("/dashboard", req.url));
 }

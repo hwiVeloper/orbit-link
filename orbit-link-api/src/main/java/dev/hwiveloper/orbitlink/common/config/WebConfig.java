@@ -33,6 +33,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("https://orbit-link.netlify.app")
                 .allowCredentials(true)
                 .maxAge(3600L);
+        registry.addMapping("/**")
+                .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS")
+                .allowedOrigins("https://orbit-link.vercel.app")
+                .allowCredentials(true)
+                .maxAge(3600L);
     }
 
     @Override
